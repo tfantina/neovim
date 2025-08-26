@@ -49,8 +49,8 @@ local function save_profiles(threshold)
 end
 
 time([[Luarocks path setup]], true)
-local package_path_str = "/Users/travis/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?.lua;/Users/travis/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?/init.lua;/Users/travis/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?.lua;/Users/travis/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?/init.lua"
-local install_cpath_pattern = "/Users/travis/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/lua/5.1/?.so"
+local package_path_str = "/Users/travis/.cache/nvim/packer_hererocks/2.1.1753364724/share/lua/5.1/?.lua;/Users/travis/.cache/nvim/packer_hererocks/2.1.1753364724/share/lua/5.1/?/init.lua;/Users/travis/.cache/nvim/packer_hererocks/2.1.1753364724/lib/luarocks/rocks-5.1/?.lua;/Users/travis/.cache/nvim/packer_hererocks/2.1.1753364724/lib/luarocks/rocks-5.1/?/init.lua"
+local install_cpath_pattern = "/Users/travis/.cache/nvim/packer_hererocks/2.1.1753364724/lib/lua/5.1/?.so"
 if not string.find(package.path, package_path_str, 1, true) then
   package.path = package.path .. ';' .. package_path_str
 end
@@ -79,12 +79,6 @@ _G.packer_plugins = {
     path = "/Users/travis/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
-  OceanicNext = {
-    config = { "\27LJ\2\n;\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0\28colorscheme OceanicNext\bcmd\bvim\0" },
-    loaded = true,
-    path = "/Users/travis/.local/share/nvim/site/pack/packer/start/OceanicNext",
-    url = "https://github.com/mhartington/oceanic-next"
-  },
   ["cmp-nvim-lsp"] = {
     loaded = true,
     path = "/Users/travis/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
@@ -95,6 +89,11 @@ _G.packer_plugins = {
     path = "/Users/travis/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
+  ["elixir-tools.nvim"] = {
+    loaded = true,
+    path = "/Users/travis/.local/share/nvim/site/pack/packer/start/elixir-tools.nvim",
+    url = "https://github.com/elixir-tools/elixir-tools.nvim"
+  },
   ["fidget.nvim"] = {
     loaded = true,
     path = "/Users/travis/.local/share/nvim/site/pack/packer/start/fidget.nvim",
@@ -104,6 +103,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/travis/.local/share/nvim/site/pack/packer/start/git-blame.nvim",
     url = "https://github.com/f-person/git-blame.nvim"
+  },
+  ["gitsigns.nvim"] = {
+    loaded = true,
+    path = "/Users/travis/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
+    url = "https://github.com/lewis6991/gitsigns.nvim"
   },
   ["lualine.nvim"] = {
     loaded = true,
@@ -135,6 +139,11 @@ _G.packer_plugins = {
     path = "/Users/travis/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
   },
+  ["nvim-treesitter"] = {
+    loaded = true,
+    path = "/Users/travis/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
+    url = "https://github.com/nvim-treesitter/nvim-treesitter"
+  },
   ["packer.nvim"] = {
     loaded = true,
     path = "/Users/travis/.local/share/nvim/site/pack/packer/start/packer.nvim",
@@ -164,14 +173,15 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/travis/.local/share/nvim/site/pack/packer/start/vim-rhubarb",
     url = "https://github.com/tpope/vim-rhubarb"
+  },
+  witchhazel = {
+    loaded = true,
+    path = "/Users/travis/.local/share/nvim/site/pack/packer/start/witchhazel",
+    url = "https://github.com/theacodes/witchhazel"
   }
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: OceanicNext
-time([[Config for OceanicNext]], true)
-try_loadstring("\27LJ\2\n;\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0\28colorscheme OceanicNext\bcmd\bvim\0", "config", "OceanicNext")
-time([[Config for OceanicNext]], false)
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then
