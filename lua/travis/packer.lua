@@ -18,20 +18,11 @@ return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
 
     --telescope
- use {
-	  'nvim-telescope/telescope.nvim', tag = '0.1.8',
-	  requires = { {'nvim-lua/plenary.nvim'} }
-  }
+    use {
+        'nvim-telescope/telescope.nvim', tag = '0.1.8',
+        requires = { { 'nvim-lua/plenary.nvim' } }
+    }
 
-    --theme
-    --
-    -- use ({
-    --    'mhartington/oceanic-next',
-    --    as = 'OceanicNext',
-    --    config = function()
-    --      vim.cmd('colorscheme OceanicNext')
-    --    end
-    --  })
 
     use { "theacodes/witchhazel" }
 
@@ -62,30 +53,6 @@ return require('packer').startup(function(use)
     use('tpope/vim-fugitive')
     use('tpope/vim-rhubarb')
     use('lewis6991/gitsigns.nvim')
-    --:use 'nvim-treesitter/nvim-treesitter'
-
-    -- Setup mason so it can manage external tooling
-    -- require('mason').setup()
-
-    -- Ensure the servers above are installed
-    --local mason_lspconfig = require 'mason-lspconfig'
-
-    -- mason_lspconfig.setup {
-    --   ensure_installed = vim.tbl_keys(servers),
-    -- }
-    --
-    -- mason_lspconfig.setup_handlers {
-    --   function(server_name)
-    --     require('lspconfig')[server_name].setup {
-    --       capabilities = capabilities,
-    --       on_attach = on_attach,
-    --       settings = servers[server_name],
-    --     }
-    --   end,
-    -- }
-
-
-
 
     --treesitter
     use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })

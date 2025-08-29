@@ -2,14 +2,12 @@
 ---- Setup mason so it can manage external tooling
 
 require('mason').setup({})
---
+
 ---- Ensure the servers above are installed
 local mason_lspconfig = require("mason-lspconfig")
---
 ---- LSP settings.
 ---- This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
-	print "ATTACHING BUFFERS"
     -- NOTE: Remember that lua is a real programming language, and as such it is possible
     -- to define small helper and utility functions so you don't have to repeat yourself
     -- many times.
@@ -47,7 +45,7 @@ local on_attach = function(_, bufnr)
     end, '[W]orkspace [L]ist Folders')
 
     vim.api.nvim_create_autocmd("BufWritePre", {
-        pattern  = "*.rb",
+        buffer = bufnr,
         callback = function()
             vim.lsp.buf.format({ async = false })
         end,
@@ -71,6 +69,9 @@ local servers = {
         Lua = {
             workspace = { checkThirdParty = false },
             telemetry = { enable = false },
+            diagnostics = {
+                globals = { "vim" },
+            }
         },
     },
 }
@@ -82,26 +83,22 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 
-handlers = {
-    function(server_name)
-		print "RUNNING SERVER NAME"
-        local opts = {
-            capabilities = capabilities,
-            on_attach = on_attach,
-            settings = servers[server_name],
-        }
-
-
-        if server_name == "ruby_lsp" then
-            opts.cmd = { "bash", "-c", "cd '" .. vim.fn.getcwd() .. "' && mise exec -- ruby-lsp" }
-        end
-
-        require('lspconfig')[server_name].setup(opts)
-    end
-}
-
 mason_lspconfig.setup({
     ensure_installed = vim.tbl_keys(servers),
-	handlers = handlers
-})
+    handlers = {
+        function(server_name)
+            print("RUNNING SERVER NAME: " .. server_name)
+            local opts = {
+                capabilities = capabilities,
+                on_attach = on_attach,
+                settings = servers[server_name],
+            }
 
+            if server_name == "ruby_lsp" then
+                opts.cmd = { "bash", "-c", "cd '" .. vim.fn.getcwd() .. "' && mise exec -- ruby-lsp" }
+            end
+
+            require('lspconfig')[server_name].setup(opts)
+        end
+    }
+})
