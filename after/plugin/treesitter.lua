@@ -7,7 +7,7 @@ return {
 
         configs.setup({
             -- A list of parser names, or "all" (the four listed parsers should always be installed)
-            ensure_installed = { "lua", "vim", "help", "javascript", "typescript", "elixir", "ruby", "heex", "eex", "json" },
+            ensure_installed = { "lua", "vim", "help", "javascript", "typescript", "elixir", "ruby", "heex", "eex",  "json" },
 
             -- Install parsers synchronously (only applied to `ensure_installed`)
             sync_install = false,
