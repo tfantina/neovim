@@ -1,24 +1,5 @@
 require("travis.remap")
-local lspconfig_setup_orig = {}
-local function block_lsp_setup()
-  local lspconfig_ok, lspconfig = pcall(require, 'lspconfig')
-  if lspconfig_ok then
-    lspconfig_setup_orig.ruby_lsp = lspconfig.ruby_lsp.setup
-    lspconfig.ruby_lsp.setup = function(config)
-      print("BLOCKED AUTOMATIC RUBY_LSP SETUP - Config: " .. vim.inspect(config or {}))
-      -- Don't actually setup, just store the attempt
-    end
-    print("SUCCESSFULLY BLOCKED RUBY_LSP AUTO-SETUP")
-  end
-end
-
--- Block it immediately
-vim.defer_fn(function()
-  block_lsp_setup()
-end, 0)
-
 require("travis.set")
-
 require('travis.packer')
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
@@ -61,16 +42,30 @@ vim.cmd "colorscheme witchhazel"
 require('lualine').setup {
   options = {
     icons_enabled = false,
-    -- theme = 'witchhazel',
+    --theme = 'Fairyfloss',
     component_separators = '|',
     section_separators = '',
-    sections = {
-      lualine_a = {
-        'filename',
-        path = 2
+  },
+  sections = {
+    lualine_c = {
+      { 'filename',
+        file_status = true,
+        path = 1
+
       }
+    },
+    lualine_x = {
+      { 'filetype' }
     }
   },
+  inactive_sections = {
+    lualine_b = {
+      { 'filename',
+        file_status = true,
+        path = 1
+      }
+    }
+  }
 }
 
 
@@ -125,5 +120,14 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
+
+-- For some reason highlighting in elixir is not working :(
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "elixir",
+  callback = function()
+    vim.cmd("TSBufEnable highlight")
+  end,
+})
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
