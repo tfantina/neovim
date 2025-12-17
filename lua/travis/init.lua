@@ -1,8 +1,8 @@
 require("travis.remap")
 require("travis.set")
-require('travis.packer')
+require("travis.packer")
 -- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
+vim.o.completeopt = "menuone,noselect"
 
 -- [[ Basic Keymaps ]]
 -- Set <space> as the leader key
@@ -13,90 +13,82 @@ vim.o.completeopt = 'menuone,noselect'
 
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
-vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 
 -- Remap for dealing with word wrap
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- Yank to system clipboard
-vim.keymap.set({ 'n', 'v' }, '<leader>y', '"+y')
+vim.keymap.set({ "n", "v" }, "<leader>y", '"+y')
 -- Paste from system clipboard
-vim.keymap.set('n', '<leader>p', '"+p')
+vim.keymap.set("n", "<leader>p", '"+p')
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
-local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
-vim.api.nvim_create_autocmd('TextYankPost', {
+local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
+vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
     vim.highlight.on_yank()
   end,
   group = highlight_group,
-  pattern = '*',
+  pattern = "*",
 })
 
-vim.cmd "colorscheme witchhazel"
+vim.cmd("colorscheme witchhazel")
 
 -- Set lualine as statusline
 -- See `:help lualine.txt`
-require('lualine').setup {
+require("lualine").setup({
   options = {
     icons_enabled = false,
     --theme = 'Fairyfloss',
-    component_separators = '|',
-    section_separators = '',
+    component_separators = "|",
+    section_separators = "",
   },
   sections = {
     lualine_c = {
-      { 'filename',
-        file_status = true,
-        path = 1
-
-      }
+      { "filename", file_status = true, path = 1 },
     },
     lualine_x = {
-      { 'filetype' }
-    }
+      { "filetype" },
+    },
   },
   inactive_sections = {
     lualine_b = {
-      { 'filename',
-        file_status = true,
-        path = 1
-      }
-    }
-  }
-}
-
+      { "filename", file_status = true, path = 1 },
+    },
+  },
+})
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
+vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist)
 
 -- Turn on lsp status information
-require('fidget').setup()
+require("fidget").setup()
 
 -- nvim-cmp setup
-local cmp = require 'cmp'
-local luasnip = require 'luasnip'
+local cmp = require("cmp")
+local luasnip = require("luasnip")
 
-cmp.setup {
+cmp.setup({
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body)
     end,
   },
-  mapping = cmp.mapping.preset.insert {
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<CR>'] = cmp.mapping.confirm {
+  mapping = cmp.mapping.preset.insert({
+    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    ["<C-Space>"] = cmp.mapping.complete(),
+    ["<CR>"] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
-    },
-    ['<Tab>'] = cmp.mapping(function(fallback)
+    }),
+    ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       elseif luasnip.expand_or_jumpable() then
@@ -104,8 +96,8 @@ cmp.setup {
       else
         fallback()
       end
-    end, { 'i', 's' }),
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
+    end, { "i", "s" }),
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
       elseif luasnip.jumpable(-1) then
@@ -113,13 +105,13 @@ cmp.setup {
       else
         fallback()
       end
-    end, { 'i', 's' }),
-  },
+    end, { "i", "s" }),
+  }),
   sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
+    { name = "nvim_lsp" },
+    { name = "luasnip" },
   },
-}
+})
 
 -- For some reason highlighting in elixir is not working :(
 

@@ -7,15 +7,15 @@ require('mason').setup({})
 
 ---- LSP settings.
 ---- This function gets run when an LSP connects to a particular buffer.
+---
 local on_attach = function(client, bufnr)
-    client.server_capabilities.documentFormattingProvider = false
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-    -- NOTE: Remember that lua is a real programming language, and as such it is possible
-    -- to define small helper and utility functions so you don't have to repeat yourself
-    -- many times.
-    --
-    -- In this case, we create a function that lets us more easily define mappings specific
-    -- for LSP related items. It sets the mode, buffer and description for us each time.
+
+
+    if client.name == "ts_ls" then
+        client.server_capabilities.documentFormattingProvider = false
+    end
+
     local nmap = function(keys, func, desc)
         if desc then
             desc = 'LSP: ' .. desc
@@ -69,7 +69,7 @@ local servers = {
     ts_ls = {},
     eslint = {},
     tailwindcss = {},
-    elixirls = {},
+    -- elixirls = {},
     lua_ls = {
         Lua = {
             workspace = { checkThirdParty = false },
@@ -96,7 +96,6 @@ local servers = {
 
 require('neodev').setup()
 
--- local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 mason_lspconfig.setup({
@@ -118,6 +117,7 @@ for server_name, server_settings in pairs(servers) do
     if server_name == "ruby_lsp" then
         opts.cmd = { "bash", "-c", "cd '" .. vim.fn.getcwd() .. "' && mise exec -- ruby-lsp" }
     end
+
 
     lspconfig[server_name].setup(opts)
 end
